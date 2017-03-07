@@ -1,0 +1,35 @@
+header, footer {
+	padding: 20px;
+	background-color: #1DBDBB;
+	border-radius: 10px;
+}
+
+h1, #footer-text {
+	color: #FBFBFB;
+	font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif;
+}
+
+#main {
+	margin:30px 25%;
+}
+
+form {
+	border-style: ridge;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+#urltext {
+	width: 100%;
+	margin: 5px 0;
+}
+
+#submit-btn {
+	padding: 3px 5px;
+}
+
+footer {
+	text-align: center;
+}
+
+
