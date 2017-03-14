@@ -22,15 +22,37 @@
     /*
      *  scrape data from the raw html
      */
-    // scrape college names and location
-    preg_match_all("/<h2 class=\"tuple-clg-heading\"><a.*_blank\">(.*)<\/a>\n<p>\| (.*)<\/p><\/h2>/", $ret, $matches);
-    $clg = $matches[1];
-    $location = $matches[2];
+    //Scrape and seperate out html containig data for each college 
+    preg_match_all("/<h2 class=\"tuple-clg-heading\">[\s\S]+?<p class=\"clr\">/", $ret, $matches);
+    
+    //scrape data for each college from their respective scraped html
+    $m = 0;     //index for arrays storing college information
+    foreach ($matches[0] as $match)
+    {
+        // scrape college names and location
+        preg_match("/<h2 class=\"tuple-clg-heading\"><a.*_blank\">(.*)<\/a>\n<p>\| (.*)<\/p><\/h2>/", $match, $matches_1);
+        $clg[$m] = $matches_1[1];
+        $location[$m] = $matches_1[2];
+    
+        // scrape part of html containing facilities for the college
+        preg_match("/<ul class=\"facility-icons\">[\s\S]+<section class=\"tpl-curse-dtls\">/", $match, $matches_2);
+    
+        //scrape facilities form html obtained
+        preg_match_all("/<h3>(.*)<\/h3>/", $matches_2[0], $matches_3);
+        $facilities[$m] = $matches_3[1];
+        
+        //upadate index
+        $m += 1;
+    }
 
     $n = 0;
+    print($m."\n");
     foreach ($clg as $col)
     {
         print($col.", ".$location[$n]."\n");
+        foreach($facilities[$n] as $facility)
+            print($facility.", ");
+        print("\n");
         $n += 1;
     }
 ?>
