@@ -23,7 +23,7 @@
      *  scrape data from the raw html
      */
     //Scrape and seperate out html containig data for each college 
-    preg_match_all("/<h2 class=\"tuple-clg-heading\">[\s\S]+?<p class=\"clr\">/", $ret, $matches);
+    preg_match_all("/<h2 class=\"tuple-clg-heading\">[\s\S]+?\n<section class=\"tuple-bottom\">/", $ret, $matches);
     
     //scrape data for each college from their respective scraped html
     $m = 0;     //index for arrays storing college information
@@ -41,6 +41,12 @@
         preg_match_all("/<h3>(.*)<\/h3>/", $matches_2[0], $matches_3);
         $facilities[$m] = $matches_3[1];
         
+        //scrape reviews for the college
+        if (preg_match("/<span><b>(.*)<\/b><a target=\"_blank\" type=\"reviews\"/", $match, $matches_4))
+            $reviews[$m] = $matches_4[1];
+        else
+            $reviews[$m] = 0;
+        
         //upadate index
         $m += 1;
     }
@@ -52,7 +58,7 @@
         print($col.", ".$location[$n]."\n");
         foreach($facilities[$n] as $facility)
             print($facility.", ");
-        print("\n");
+        print("\nReviews: ".$reviews[$n]."\n");
         $n += 1;
     }
 ?>
