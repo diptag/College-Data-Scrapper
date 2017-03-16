@@ -3,6 +3,46 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="style.css">
+<script>
+    /*global $*/
+    $(document).ready(function () {
+         $("#form").submit(function () {
+            $("#error").css("display", "none");
+            $("#warning").css("display", "none");
+            var pgurl = $("#urltext").val();
+            var result = (/^(http.*)(?:-\d.*)$/).exec(pgurl.trim());
+            if (result === null) {
+                $("#warning").css("display", "block");
+                return false;
+            } else {
+                var pages = 0;
+                var loadstatus = true;
+                $("#progress").css("display", "block");
+                $.ajax({
+                    url: "scrape.php",
+                    data: {
+                        pageurl: result[1]
+                    },
+                    method: "POST",
+                    success: function (data) {
+                        if (data.status === false) {
+                            $("#progress").css("display", "none");
+                            $("error").css("display", "block");
+                            loadstatus = false;
+                            $("error").val(data.pages);
+                        } else {
+                            pages = data.pages;
+                        }
+                    }
+                });
+                if (loadstatus === false){
+                    return false;
+                }
+                return true;
+            }
+        });
+    });
+</script>
 <title>Engineering College Finder</title>
 </head>
 
@@ -13,12 +53,13 @@
   </header>
       <div id="main">
         	<form>
-            	Enter Shikha.com URL<br>
-                <input type="text" id="urltext" name="url"><br>
+            	Enter Shikha.com URL (Format: http://www.shiksha.com/...)<br>
+                <input type="text" id="urltext"><br>
+                <p id="warning">Please enter a valid shiksha.com engineerng college url</p>
                 <input type="submit" id="submit-btn">
             </form>
-            <table>
-            </table>
+            <div id="progress"><img alt="Loading...." src="Loading.gif"></div>
+            <p id="error">Couldn't Connect to the shiksha.com.</p>
         </div>
         <footer>
         	<span id="footer-text">Created by Diptanshu Agarwal &copy;</span>
