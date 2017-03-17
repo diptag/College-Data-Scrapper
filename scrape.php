@@ -1,13 +1,14 @@
 <?php
     //check if url is not empty
-    /*if (!isset($_POST["url"]))
+    if (!isset($_GET["pageurl"]))
     {
         exit();    
     }
-    */
+    
+    
     //get the raw html from shiksha.com using cURL
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://www.shiksha.com/b-tech/colleges/b-tech-colleges-bangalore");
+    curl_setopt($ch, CURLOPT_URL, $_GET["pageurl"]);
     curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:32.0) Gecko/20100101 Firefox/32.0");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $ret = curl_exec($ch);
@@ -50,8 +51,17 @@
         //upadate index
         $m += 1;
     }
+    
+    // Send content type header
+    header ("Content-type: application/json");
+    
+    // Check if it is the last page and send json data
+    if (preg_match("/next linkpagination\"><a data-page=\"\d\" href = (.*)><i/", $ret, $next))
+        print(json_encode(array("status"=>false, "lastpage"=>true, "next" => $next[1]), JSON_PRETTY_PRINT));
+    else
+        print(json_encode(array("status"=>false, "lastpage"=>false), JSON_PRETTY_PRINT));
 
-    $n = 0;
+    /*$n = 0;
     print($m."\n");
     foreach ($clg as $col)
     {
@@ -60,5 +70,5 @@
             print($facility.", ");
         print("\nReviews: ".$reviews[$n]."\n");
         $n += 1;
-    }
+    }*/
 ?>
