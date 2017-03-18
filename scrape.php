@@ -1,7 +1,11 @@
 <?php
-    //check if url is not empty
+     // Send content type header
+    header ("Content-type: application/json");
+    
+    //check if url is not empty, else return not loaded
     if (!isset($_GET["pageurl"]))
     {
+        print(json_encode(array("status" => false), JSON_PRETTY_PRINT));
         exit();    
     }
     
@@ -14,9 +18,10 @@
     $ret = curl_exec($ch);
     curl_close($ch);
     
-    // check if html page is recieved 
+    // check if html page is recieved else return not loaded
     if ($ret === false)
     {
+        print(json_encode(array("status" => false), JSON_PRETTY_PRINT));
         exit();
     }
 
@@ -52,23 +57,10 @@
         $m += 1;
     }
     
-    // Send content type header
-    header ("Content-type: application/json");
-    
     // Check if it is the last page and send json data
     if (preg_match("/next linkpagination\"><a data-page=\"\d\" href = (.*)><i/", $ret, $next))
-        print(json_encode(array("status"=>false, "lastpage"=>true, "next" => $next[1]), JSON_PRETTY_PRINT));
+        print(json_encode(array("status" => true, "lastpage" => false, "nextpage" => $next[1]), JSON_PRETTY_PRINT));
     else
-        print(json_encode(array("status"=>false, "lastpage"=>false), JSON_PRETTY_PRINT));
+        print(json_encode(array("status" => true, "lastpage" => true), JSON_PRETTY_PRINT));
 
-    /*$n = 0;
-    print($m."\n");
-    foreach ($clg as $col)
-    {
-        print($col.", ".$location[$n]."\n");
-        foreach($facilities[$n] as $facility)
-            print($facility.", ");
-        print("\nReviews: ".$reviews[$n]."\n");
-        $n += 1;
-    }*/
 ?>
