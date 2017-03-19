@@ -11,51 +11,46 @@ $(function () {
     var result = (/(http:\/\/www\.shiksha\.com\/b-tech\/colleges\/b-tech-colleges-[^\d]*[^\d\-])(?=-\d.*)?/).exec(pgurl);
     
     // display error if user entered invalid shiksha.com url
-    if (result === null) 
-    {
+    if (result === null) {
       $("#warning").css("display", "block");
       return false;
-    } 
-    else 
-    {
+    } else {
       // display loading gif
       $("#progress").css("visibility", "visible");
       
-      // declare status, lastpage and nextpage variables
+      // declare status,scrapeid, lastpage and nextpage variables
       var lastpage = false;
+      var scrapeid = 0;
       var loadstatus = true;
       var nextpage = result[1];
       
       // use while loop to send multiple ajax requests to scrape.php till last page is not reached 
-      while ((lastpage === false) && (loadstatus === true))
+      while ((lastpage !== true) && (loadstatus !== false))
       {
         $.ajax({
           url: "scrape.php",
           data: {
-            pageurl: nextpage
+            pageurl: nextpage,
+            scrapeid: scrapeid
           },
           async: false,
           success: function (data) {
-            if (data.status === false)
-            {
+            if (data.status === false) {
               // upadate loadstatus
               loadstatus = false;
-            }
-            else
-            {
+            } else {
               // upadate lastpage and nextpage
-              if (data.lastpage === false)
-              {
+              if (data.lastpage === false) {
                 lastpage = false;
                 nextpage = data.nextpage;
-              }
-              else
-              {
+                scrapeid = data.scrapeid;
+              } else {
                 lastpage = true;
               }
             }
           }
         });
+        $("#msg").text(nextpage+"<br> "+scrapeid);
       }
       return true;
     }
