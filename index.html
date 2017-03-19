@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="style.css">
-<script src="jquery-1.11.3.min.js"></script>
+<script src="jquery-3.2.0.min.js"></script>
 <script src="scripts.js"></script>
 <title>Engineering College Finder</title>
 </head>
@@ -13,8 +13,8 @@
   <header>
         	<h1>ENGINEERING COLLEGE FINDER</h1>
   </header>
-        <div id="main">
-       	    <form id="form" action="result.php">
+        <div id="main" action="result.php">
+       	    <form id="form">
             	Enter Shikha.com URL (Format: http://www.shiksha.com/...)<br>
                 <input type="text" id="urltext"><br>
                 <p id="warning">Please enter a valid shiksha.com engineerng college url</p>
@@ -22,6 +22,7 @@
             </form>
             <div id="error">Couldn't Connect to the shiksha.com Server or the URL is incorrect.</div>
             <div id="progress"><img alt="Loading...." src="Loading.gif"></div>
+            <div id="msg"></div>
       </div>
         <footer>
         	<span id="footer-text">Created by Diptanshu Agarwal &copy;</span>
