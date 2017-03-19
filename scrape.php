@@ -64,7 +64,7 @@
     $dbh = new PDO("mysql:host=127.0.0.1;dbname=project_1", "dadiptanshu", "v1kCjsvLYytrBTGV");
     
     // get scrape id from databse if scrape id given through GET request is 0 for currnet scrape
-    if ($_GET["scrapeid"] === 0)
+    if ($_GET["scrapeid"] == 0)
     {
         $lastscrape = $dbh->query("SELECT MAX(scrape_id) AS lastscrape FROM colleges");
         $temp = $lastscrape->fetch(PDO::FETCH_ASSOC);
