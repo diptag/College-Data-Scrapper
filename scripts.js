@@ -50,7 +50,6 @@ $(function () {
             }
           }
         });
-        $("#msg").text(nextpage+"<br> "+scrapeid);
       }
       return true;
     }
