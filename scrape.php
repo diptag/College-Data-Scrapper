@@ -1,4 +1,7 @@
 <?php
+    //enable session
+    session_start();
+    
     // Send content type header
     header ("Content-type: application/json");
     
@@ -77,6 +80,9 @@
     {
         $nextscrape = $_GET["scrapeid"];
     }
+    
+    // update session variable
+    $_SESSION["scrape_id"] = $nextscrape;
     
     // prepare insert statement for inserting data into table college
     $stmt = $dbh->prepare("INSERT INTO colleges (scrape_id, college, location, reviews) VALUES (".$nextscrape.", :college, :location, :reviews)");
