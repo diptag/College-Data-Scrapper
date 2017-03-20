@@ -19,6 +19,7 @@ form {
 	border-style: ridge;
 	padding: 20px;
 	border-radius: 10px;
+	width: 60%;
 }
 
 #urltext {
@@ -37,6 +38,7 @@ form {
 #progress, #error {
 	padding: 10px 30%;
 	visibility: hidden;
+	text-align: center;
 }
 
 #error, #warning {
@@ -46,6 +48,8 @@ form {
 table {
 	margin-left: auto;
 	margin-right: auto;
+	border: thin solid #000000;
+	padding: 5px;
 }
 
 tr:nth-child(odd) {
@@ -56,8 +60,9 @@ td, th {
 	padding: 7px;
 }
 
-#back {
+.back {
 	text-align: center;
+	font-size: 20px;
 }
 
 footer {
