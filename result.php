@@ -9,11 +9,6 @@
   $result = $dbh->query("SELECT * FROM colleges WHERE scrape_id = ".$_SESSION["scrape_id"]);
   $colleges = $result->fetchAll(PDO::FETCH_ASSOC);
   
-  // extract city from locaion of colleges following the given regular expression
-  $n = 0;
-  while (!(preg_match("/.*, (.*)/", $colleges[$n]["location"], $city)))
-    $n++;
-  
 ?>
 
 
@@ -31,7 +26,7 @@
         	<h1>ENGINEERING COLLEGE FINDER</h1>
   </header>
   <div id="main">
-    <center><h2>Engineering Colleges in "<?= $city[1] ?>"</h2></center>
+    <center><h2>Engineering Colleges in "<?= $_SESSION["city"] ?>"</h2></center>
     <p class="back"><a href="index.html">Go Back</a></p>
     <table>
     	<tr>

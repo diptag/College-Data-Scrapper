@@ -6,7 +6,7 @@
     header ("Content-type: application/json");
     
     //check if url is not empty, else return not loaded
-    if (!isset($_GET["pageurl"]) && !isset($_GET["scrapeid"]))
+    if (empty($_GET["pageurl"]) && empty($_GET["scrapeid"]))
     {
         print(json_encode(array("status" => false), JSON_PRETTY_PRINT));
         exit();    
@@ -125,8 +125,14 @@
     
     // Check if it is the last page and send json data
     if (preg_match("/next linkpagination\"><a data-page=\"\d\" href = (.*)><i/", $ret, $next))
+    {
         print(json_encode(array("status" => true, "lastpage" => false, "nextpage" => $next[1], "scrapeid" => $nextscrape), JSON_PRETTY_PRINT));
+    }
     else
+    {
+        // extract city name to display in heading on result page
+        preg_match("/b-tech-colleges-([^\d]*[^\d\-])(?=-\d.*)?/", $ret, $city);
+        $_SESSION["city"] = $city[1];
         print(json_encode(array("status" => true, "lastpage" => true), JSON_PRETTY_PRINT));
-        exit();
+    }
 ?>
