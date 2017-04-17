@@ -47,7 +47,6 @@
     	   <td><?= $college["college"] ?></td>
     	   <td><?= $college["location"] ?></td>
     	   <td>
-    	     <ul>
     	     <?php
     	      // extract facilities for each college from table facilities
     	      $result = $dbh->query("SELECT * FROM facilities WHERE entry_id = ".$college["entry_id"]);
@@ -56,11 +55,10 @@
     	      while ($facility = $result->fetch(PDO::FETCH_ASSOC))
     	      {
     	     ?>
-    	       <li><?= $facility["facility"] ?></li>
+    	       <?= $facility["facility"].", " ?>
     	     <?php
     	      }
     	     ?>
-    	     </ul>
     	   </td>
     	   <td><?= $college["reviews"] ?></td>
     	</tr>

@@ -4,8 +4,7 @@
 $(function () {
   
   // execute the following code when form is submitted
-  $("#form").submit(function () {
-
+  $("#form").submit(function (e) {
     // validate url entered by the user
     var pgurl = $("#urltext").val();
     var result = (/(http:\/\/www\.shiksha\.com\/b-tech\/colleges\/b-tech-colleges-[^\d]*[^\d\-])(?=-\d.*)?/).exec(pgurl);
@@ -20,6 +19,7 @@ $(function () {
       
       // declare status,scrapeid, lastpage and nextpage variables
       var lastpage = false;
+      // scrapeid for differentiating between scrpaed data of same cities
       var scrapeid = 0;
       var loadstatus = true;
       var nextpage = result[1];
@@ -38,13 +38,15 @@ $(function () {
             if (data.status === false) {
               // upadate loadstatus
               loadstatus = false;
-            } else {
+            } 
+            else {
               // upadate lastpage and nextpage
               if (data.lastpage === false) {
                 lastpage = false;
                 nextpage = data.nextpage;
                 scrapeid = data.scrapeid;
-              } else {
+              } 
+              else {
                 lastpage = true;
               }
             }
