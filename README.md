@@ -19,3 +19,12 @@ The files for the application are as follows:
 6)scrape.php - The PHP file which scrapes the college data from the page whose URL it receives through ajax requests.
 7)result.php - The PHP file which displays results of the scrapping by getting data form the database for the particular scrape.
 8)project_1.sql - File created using mysqldump.
+
+How to run the project on IDE
+1)First check the database credentials used in config.php and change them if required.
+2)Start the server using 'apache50 start ~/workspace/project_1'.
+3)Start the mysql server using 'mysql50 start'
+4)If the project is run on different user's IDE, first use 'username50' and 'password50' to get username and password of the user.
+    The in a new tab go to https://ide50-{username}.cs50.io/phpmyadmin and use the username and password. After opening phpmyadmin 
+    go to SQL tab paste the commands in 'project_1.sql' in it and click Go. This will setup the database for the project.
+5)Now, just go to https://ide50-{username}.cs50.io to visit the website.
