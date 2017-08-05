@@ -3,7 +3,7 @@
   session_start();
   
   // connect to database
-  $dbh = new PDO("mysql:host=127.0.0.1;dbname=project_1", "dadiptanshu", "v1kCjsvLYytrBTGV");
+  $dbh = new PDO("mysql:host=127.0.0.1;dbname=project_1", "username", "password");
   
   // extract college data from the college
   $result = $dbh->query("SELECT * FROM colleges WHERE scrape_id = ".$_SESSION["scrape_id"]);
